@@ -1,6 +1,6 @@
 from utils.core import logger
 from pyrogram import Client
-from data import config
+from data.config import config
 import os
 
 class Accounts:
@@ -33,12 +33,12 @@ class Accounts:
                         proxy = proxy_dict[session]
                         proxy_client = {
                             "scheme": config.PROXY_TYPE,
-                            "hostname": proxy.split(':')[0],
-                            "port": int(proxy.split(':')[1]),
-                            "username": proxy.split(':')[2],
-                            "password": proxy.split(':')[3],
+                            "hostname": proxy.split(":")[1].split("@")[1],
+                            "port": int(proxy.split(":")[2]),
+                            "username": proxy.split(":")[0],
+                            "password": proxy.split(":")[1].split("@")[0]
                         }
-                        client = Client(name=session, api_id=self.api_id, api_hash=self.api_hash, workdir=self.workdir,proxy=proxy_client)
+                        client = Client(name=session, api_id=self.api_id, api_hash=self.api_hash, workdir=self.workdir, proxy=proxy_client)
 
                         if await client.connect():
                             valid_sessions.append(session)

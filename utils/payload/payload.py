@@ -7,3 +7,6 @@ async def get_payload(gameId, points):
     payload = output.decode('utf-8').strip()
     return payload
 
+if __name__ == '__main__':
+    r = asyncio.run(get_payload("46cbf86f-b8f2-428d-b652-83168f4551d4", 203))
+    print(r)

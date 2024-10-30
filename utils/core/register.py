@@ -1,7 +1,7 @@
 from loguru import logger
 from data import config
 import pyrogram
-from data.config import USE_PROXY
+from data.config import config
 import random
 
 async def create_sessions():
@@ -10,7 +10,7 @@ async def create_sessions():
         if not session_name:
             return
         
-        if USE_PROXY:
+        if config.USE_PROXY:
             proxy_dict = {}
             with open('proxy.txt','r') as file:
                 proxy_list = [i.strip().split() for i in file.readlines() if len(i.strip().split()) == 2]
@@ -21,10 +21,10 @@ async def create_sessions():
                 proxy = proxy_dict[session_name]
                 proxy_client = {
                     "scheme": config.PROXY_TYPE,
-                    "hostname": proxy.split(':')[0],
-                    "port": int(proxy.split(':')[1]),
-                    "username": proxy.split(':')[2],
-                    "password": proxy.split(':')[3],
+                    "hostname": proxy.split(":")[1].split("@")[1],
+                    "port": int(proxy.split(":")[2]),
+                    "username": proxy.split(":")[0],
+                    "password": proxy.split(":")[1].split("@")[0]
                 }
                 
                 session = pyrogram.Client(
